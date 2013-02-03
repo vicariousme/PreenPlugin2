@@ -1,0 +1,32 @@
+{
+    "Title": "Preen",
+    "MusicTitle": "Preen Music",
+    "VideoTitle": "Preen Video",
+    "PhotosTitle": "Preen Photos",
+    "ApplicationsTitle": "Preen Applications",
+	"Update Skins": "Update skins",
+	"Check github for updates to your selected skins.": "Check github for updates to your selected skins.",
+	"Preen preferences": "Preen preferences",
+	"Customize your version of Preen.": "Customize your version of Preen.",
+	"Browse Skins...": "Browse Skins...",
+	"Browse all skins Preen tracks.": "Browse all skins Preen tracks.",
+	"Choose your current skin and select which skins to update.": "Choose your current skin and select which skins to update.",
+	"Get Latest": "Get Latest",
+	"Get the latest version of this skin now.": "Get the latest version of this skin now.",
+	"Downloads or updates this skin.": "Downloads or updates this skin.",
+	"Download started.": "Download started.",
+	"This skin has started downloading.": "This skin has started downloading.",
+	"Screenshots": "Screenshots",
+	"Restart Plex With This Skin": "Restart Plex With This Skin", 
+	"Quit Plex and Restart using this skin.": "Quit Plex and Restart using this skin.",
+	"Selecting this option will quit Plex and then reopen Plex with this skin.": "Selecting this option will quit Plex and then reopen Plex with this skin.",
+	"Restarting Momentarily.": "Restarting Momentarily.",
+	"Plex should quit shortly.": "Plex should quit shortly.",
+	"Add To Update List": "Add To Update List",
+	"Add this skin to the update list.": "Add this skin to the update list.",
+	"Add this skin to the list of skins which are updated when the 'Update Skins' option of the main menu is selected.": "Add this skin to the list of skins which are updated when the 'Update Skins' option of the main menu is selected.",
+	"Toggled Update List.": "Toggled Update List.",
+	"This skin will now update whenever Update Skins is slected.": "This skin will now update whenever Update Skins is slected."
+
+
+}
