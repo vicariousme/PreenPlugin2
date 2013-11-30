@@ -1,18 +1,14 @@
-Preen
-=====
+#Preen#
 
-Preen is a skin manager for Plex Media Center. It has been available as a Mac OS X application since 2010, which can be downloaded from http://www.anomiesoftware.com/Anomie_Software/Preen.html
+Preen is a skin manager for [Plex Home Theater and Plex Media Center](http://www.plexapp.com/desktop/). It has been available as a [Max OS X application](http://www.anomiesoftware.com/Anomie_Software/Preen.html) since 2010.
 
-This version of Preen is designed as a plugin for the Plex Media Server. It is open-source Python code so that anyone can contribute. It can be modified to work for Windows. It can be maintained when I don't have time to maintain it.
+PreenPlugin exists to bring Preen as a Plugin for Plex Media Server. It is open-source Python code so that anyone can contribute. It can be modified to work for Windows. It can be maintained when I don't have time to maintain it.
 
-WARNING: Terrible Python code ahead. This is my first Python code, so if you hate it contribute to making it better.
+##WARNING: Terrible Python code ahead.##
+This is my first Python code, so if you hate, please contribute to making it better.
 
-Early versions will require git.
+Git is currently required.
 
-Initial Features:
-	List skins from the skins list.
-	Download/update existing skins with git on the Mac.
-	
 Desired Features:
 	Windows compatibility.
 	Automatically update skins.
@@ -26,3 +22,9 @@ Known Issues:
 	git pull won't work because of the skin encoding thing
 	we're naming folders improperly
 	Blur shows up twice (because we look at the skin names and the name Blur exists twice)
+
+Changelog:
+ - Nov 30, 2013: The plugin can download PHT skins with Git on the Mac.
+ - Nov 30, 2013: The plugin now separates Laika skins from PHT skins.
+ - Initial Release: The plugin can list skins from the skins list.
+ - Initial Release: The plugin can download/update existing skins with git on the Mac.
