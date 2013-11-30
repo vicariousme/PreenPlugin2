@@ -10,18 +10,18 @@ This is my first Python code, so if you hate, please contribute to making it bet
 Git is currently required.
 
 Desired Features:
-	Windows compatibility.
-	Automatically update skins.
-	Remove git requirement.
-	Show images from the skins when they are browsed.
-	Ability to change the skin from within the plugin.
-	Some soft of feedback about how far a git download has progressed.
+ - Windows compatibility.
+ - Automatically update skins.
+ - Remove git requirement.
+ - Show images from the skins when they are browsed.
+ - Ability to change the skin from within the plugin.
+ - Some soft of feedback about how far a git download has progressed.
 	
 Known Issues:
-	Not compatible with Alaska/Laika skin.
-	git pull won't work because of the skin encoding thing
-	we're naming folders improperly
-	Blur shows up twice (because we look at the skin names and the name Blur exists twice)
+ - Not compatible with Alaska/Laika skin.
+ - git pull won't work because of the skin encoding thing
+ - we're naming folders improperly
+ - Blur shows up twice (because we look at the skin names and the name Blur exists twice)
 
 Changelog:
  - Nov 30, 2013: The plugin can download PHT skins with Git on the Mac.
