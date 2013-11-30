@@ -68,18 +68,6 @@ def PreenMainMenu():
 def MediaCenterChooser():
 	dir = MediaContainer(viewGroup="InfoList")
 
-	# The menu item for Laika skins
-	dir.Append(
-		Function(
-			DirectoryItem(
-				SkinBrowser,
-				"Laika Skins (Plex 9.5 - 9.8)",
-				subtitle="Skins for Laika",
-				summary="Show skins for the Laika version of Plex Media Center",
-			), compatibility="Laika"
-		)
-	)
-
 	# The menu item for PHT skins
 	dir.Append(
 		Function(
@@ -89,6 +77,18 @@ def MediaCenterChooser():
 				subtitle="Skins for PHT",
 				summary="Show skins for Plex Home Theater",
 			), compatibility="PHT"
+		)
+	)
+
+	# The menu item for Laika skins
+	dir.Append(
+		Function(
+			DirectoryItem(
+				SkinBrowser,
+				"Laika Skins (Plex 9.5 - 9.8)",
+				subtitle="Skins for Laika",
+				summary="Show skins for the Laika version of Plex Media Center",
+			), compatibility="Laika"
 		)
 	)
 
