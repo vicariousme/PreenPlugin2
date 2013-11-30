@@ -57,12 +57,24 @@ def ValidatePrefs():
 	return
   
 
-
+####################################################################################################
+# PreenMainMenu
+#
+# This function is called when the Main Menu is needed.
+# 
+# For now all we do is return the menu.
+####################################################################################################
 def PreenMainMenu():
 	Log("starting PreenMainMenu")
 	return MediaCenterChooser()
 
-# Here the user gets to choose which skins to look at
+####################################################################################################
+# MediaCenterChooser
+#
+# Allow the user to tell us if they're using Plex Media Center (older) or
+# Plex Home Theater (newer). The Plex version with the most users should
+# be the first selection to reduce user clicking.
+####################################################################################################
 def MediaCenterChooser():
 	dir = MediaContainer(viewGroup="InfoList")
 
@@ -92,8 +104,12 @@ def MediaCenterChooser():
 
 	return dir
 
+####################################################################################################
+# SkinBrowser
+#
 # This function looks through our Dict for every skin we are tracking
 # For each skin it adds a menu item which will start the download of the skin
+####################################################################################################
 def SkinBrowser(sender, compatibility):
 	Log("starting SkinBrowser")
 	dir = MediaContainer(viewGroup="InfoList")
@@ -122,8 +138,15 @@ def SkinBrowser(sender, compatibility):
 				)
 								
 	return dir
-		
-# This function will download a selected skin with git
+
+####################################################################################################
+# DownloadSkin
+#
+# This function downloads the skin when the user selects it. At a high level it:
+#  - Figure out what folder the skin needs to go in
+#  - Clone the skin if it doesn't already exist (in a new process)
+#  - Pull the latest if the skin already exists (in a new process)
+####################################################################################################
 def DownloadSkin(sender, whichSkin):
 	Log("starting DownloadSkin")
 
@@ -158,6 +181,7 @@ def DownloadSkin(sender, whichSkin):
 			L("This skin has started downloading.")
 		)
 
+	# if the skin already exists, we simply pull the latest version from github
 	else:
 		Log("starting pull")
 		theCommand = ['sh', '-c', 'cd ' +  os.path.expanduser(unescapedPath + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]) + '; ' \
@@ -169,9 +193,12 @@ def DownloadSkin(sender, whichSkin):
 			L("This skin has started updating.")
 		)
 		
-
+####################################################################################################
+# ProcessSkinsList
+#
 # ProcessSkinsList downloads a skin list (XML) from anomiesoftware.com
 # It then adds that to the plugin's Data storage provides by PMS
+####################################################################################################
 def processSkinsList():
 	Log("starting processSkinsList")
 	#download the XML file and separate out the preenSkin elements
