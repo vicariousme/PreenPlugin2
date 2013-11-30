@@ -1,14 +1,11 @@
 Preen
+=====
 
-Preen is a skin manager for Plex Media Center. It has been available as a Mac OS X application
-since 2010, which can be downloaded from http://www.anomiesoftware.com/Anomie_Software/Preen.html
+Preen is a skin manager for Plex Media Center. It has been available as a Mac OS X application since 2010, which can be downloaded from http://www.anomiesoftware.com/Anomie_Software/Preen.html
 
-This version of Preen is designed as a plugin for the Plex Media Server. It is open-source
-Python code so that anyone can contribute. It can be modified to work for Windows. It can
-be maintained when I don't have time to maintain it.
+This version of Preen is designed as a plugin for the Plex Media Server. It is open-source Python code so that anyone can contribute. It can be modified to work for Windows. It can be maintained when I don't have time to maintain it.
 
-WARNING: Terrible Python code ahead. This is my first Python code, so if you hate it
-contribute to making it better.
+WARNING: Terrible Python code ahead. This is my first Python code, so if you hate it contribute to making it better.
 
 Early versions will require git.
 

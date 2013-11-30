@@ -2,9 +2,7 @@ import os, subprocess, commands, time
 from subprocess import Popen, PIPE
 
 VIDEO_PREFIX =	"/video/preen"
-SKINS_LIST =	"http://anomiesoftware.com/downloads/preenSkinsLaika1.xml"
-SKINS_FOLDER =	"~/Library/Application\ Support/Plex/addons/"
-SKINS_FOLDER_PYTHON = "~/Library/Application Support/Plex/addons/"
+SKINS_LIST =	"http://anomiesoftware.com/downloads/preenSkinsPHT1.xml"
 
 SKIMAGES_FOLDER = "http://www.anomiesoftware.com/skimages/"
 
@@ -62,11 +60,41 @@ def ValidatePrefs():
 
 def PreenMainMenu():
 	Log("starting PreenMainMenu")
-	return SkinBrowser()
+	return MediaCenterChooser()
+
+# Here the user gets to choose which skins to look at
+def MediaCenterChooser():
+	dir = MediaContainer(viewGroup="InfoList")
+
+	# The menu item for PHT skins
+	dir.Append(
+		Function(
+			DirectoryItem(
+				SkinBrowser,
+				"Plex Home Theater Skins (Plex 1.0+)",
+				subtitle="Skins for PHT",
+				summary="Show skins for Plex Home Theater",
+			), compatibility="PHT"
+		)
+	)
+
+	# The menu item for Laika skins
+	dir.Append(
+		Function(
+			DirectoryItem(
+				SkinBrowser,
+				"Laika Skins (Plex 9.5 - 9.8)",
+				subtitle="Skins for Laika",
+				summary="Show skins for the Laika version of Plex Media Center",
+			), compatibility="Laika"
+		)
+	)
+
+	return dir
 
 # This function looks through our Dict for every skin we are tracking
 # For each skin it adds a menu item which will start the download of the skin
-def SkinBrowser():
+def SkinBrowser(sender, compatibility):
 	Log("starting SkinBrowser")
 	dir = MediaContainer(viewGroup="InfoList")
 
@@ -78,7 +106,7 @@ def SkinBrowser():
 		if ( Data.Exists("skinfo." + String.Encode(knownSkin)) ):
 			knownSkinDict = Data.LoadObject("skinfo." + String.Encode(knownSkin))
 			Log("adding to SkinBrowserMenu: %s" % knownSkinDict[ASSkinNameDefault])
-			if ( ASCompatibilityDefault in knownSkinDict ) :
+			if ( knownSkinDict[ASCompatibilityDefault] == compatibility ) :
 				skinDisplayName = knownSkinDict[ASSkinNameDefault]
 				dir.Append(
 					Function(
@@ -101,13 +129,24 @@ def DownloadSkin(sender, whichSkin):
 
 	resultOut = ""
 	resultError = ""
-	
+
+	# figure out which folder we'll need to go to
+	whichPlex = Data.LoadObject("skinfo." + whichSkin)[ASCompatibilityDefault]
+	unescapedPath = "";
+	escapedPath = "";
+	if (whichPlex == "PHT"):
+		unescapedPath = "~/Library/Application Support/Plex Home Theater/addons/"
+		escapedPath = "~/Library/Application\ Support/Plex\ Home\ Theater/addons/"
+	elif (whichPlex == "Laika"):
+		unescapedPath = "~/Library/Application Support/Plex/addons/"
+		escapedPath = "~/Library/Application\ Support/Plex/addons/"
+
 	# if the folder for the skin exists we just go to that folder and pull the skin.
 	# if it doesn't exist, we go to the path and run git clone
-	if (not os.path.exists(os.path.expanduser(SKINS_FOLDER_PYTHON + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]))):
+	if (not os.path.exists(os.path.expanduser(unescapedPath + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]))):
 		Log("starting clone")
 		theCommand = ['sh', '-c', \
-			'cd ' + os.path.expanduser(SKINS_FOLDER) + '; ' + \
+			'cd ' + os.path.expanduser(escapedPath) + '; ' + \
 			'/usr/local/git/bin/git clone git://github.com/' + Data.LoadObject("skinfo." + whichSkin)[ASSkinPathDefault] + \
 			" " + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault] + " " + \
 			'&> /dev/null &']
@@ -121,7 +160,7 @@ def DownloadSkin(sender, whichSkin):
 
 	else:
 		Log("starting pull")
-		theCommand = ['sh', '-c', 'cd ' +  os.path.expanduser(SKINS_FOLDER_PYTHON + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]) + '; ' \
+		theCommand = ['sh', '-c', 'cd ' +  os.path.expanduser(unescapedPath + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]) + '; ' \
 			'git pull']
 		theProcess = subprocess.Popen(theCommand, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 		resultOut, resultError = theProcess.communicate()
