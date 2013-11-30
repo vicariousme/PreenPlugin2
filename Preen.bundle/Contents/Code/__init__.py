@@ -2,9 +2,9 @@ import os, subprocess, commands, time
 from subprocess import Popen, PIPE
 
 VIDEO_PREFIX =	"/video/preen"
-SKINS_LIST =	"http://anomiesoftware.com/downloads/preenSkinsLaika1.xml"
-SKINS_FOLDER =	"~/Library/Application\ Support/Plex/addons/"
-SKINS_FOLDER_PYTHON = "~/Library/Application Support/Plex/addons/"
+SKINS_LIST =	"http://anomiesoftware.com/downloads/preenSkinsPHT1.xml"
+SKINS_FOLDER =	"~/Library/Application\ Support/Plex\ Home\ Theater/addons/"
+SKINS_FOLDER_PYTHON = "~/Library/Application Support/Plex Home Theater/addons/"
 
 SKIMAGES_FOLDER = "http://www.anomiesoftware.com/skimages/"
 
@@ -62,11 +62,41 @@ def ValidatePrefs():
 
 def PreenMainMenu():
 	Log("starting PreenMainMenu")
-	return SkinBrowser()
+	return MediaCenterChooser()
+
+# Here the user gets to choose which skins to look at
+def MediaCenterChooser():
+	dir = MediaContainer(viewGroup="InfoList")
+
+	# The menu item for Laika skins
+	dir.Append(
+		Function(
+			DirectoryItem(
+				SkinBrowser,
+				"Laika Skins (Plex 9.5 - 9.8)",
+				subtitle="Skins for Laika",
+				summary="Show skins for the Laika version of Plex Media Center",
+			), compatibility="Laika"
+		)
+	)
+
+	# The menu item for PHT skins
+	dir.Append(
+		Function(
+			DirectoryItem(
+				SkinBrowser,
+				"Plex Home Theater Skins (Plex 1.0+)",
+				subtitle="Skins for PHT",
+				summary="Show skins for Plex Home Theater",
+			), compatibility="PHT"
+		)
+	)
+
+	return dir
 
 # This function looks through our Dict for every skin we are tracking
 # For each skin it adds a menu item which will start the download of the skin
-def SkinBrowser():
+def SkinBrowser(sender, compatibility):
 	Log("starting SkinBrowser")
 	dir = MediaContainer(viewGroup="InfoList")
 
@@ -78,7 +108,7 @@ def SkinBrowser():
 		if ( Data.Exists("skinfo." + String.Encode(knownSkin)) ):
 			knownSkinDict = Data.LoadObject("skinfo." + String.Encode(knownSkin))
 			Log("adding to SkinBrowserMenu: %s" % knownSkinDict[ASSkinNameDefault])
-			if ( ASCompatibilityDefault in knownSkinDict ) :
+			if ( knownSkinDict[ASCompatibilityDefault] == compatibility ) :
 				skinDisplayName = knownSkinDict[ASSkinNameDefault]
 				dir.Append(
 					Function(
