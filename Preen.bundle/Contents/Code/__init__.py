@@ -3,8 +3,6 @@ from subprocess import Popen, PIPE
 
 VIDEO_PREFIX =	"/video/preen"
 SKINS_LIST =	"http://anomiesoftware.com/downloads/preenSkinsPHT1.xml"
-SKINS_FOLDER =	"~/Library/Application\ Support/Plex\ Home\ Theater/addons/"
-SKINS_FOLDER_PYTHON = "~/Library/Application Support/Plex Home Theater/addons/"
 
 SKIMAGES_FOLDER = "http://www.anomiesoftware.com/skimages/"
 
@@ -131,13 +129,24 @@ def DownloadSkin(sender, whichSkin):
 
 	resultOut = ""
 	resultError = ""
-	
+
+	# figure out which folder we'll need to go to
+	whichPlex = Data.LoadObject("skinfo." + whichSkin)[ASCompatibilityDefault]
+	unescapedPath = "";
+	escapedPath = "";
+	if (whichPlex == "PHT"):
+		unescapedPath = "~/Library/Application Support/Plex Home Theater/addons/"
+		escapedPath = "~/Library/Application\ Support/Plex\ Home\ Theater/addons/"
+	elif (whichPlex == "Laika"):
+		unescapedPath = "~/Library/Application Support/Plex/addons/"
+		escapedPath = "~/Library/Application\ Support/Plex/addons/"
+
 	# if the folder for the skin exists we just go to that folder and pull the skin.
 	# if it doesn't exist, we go to the path and run git clone
-	if (not os.path.exists(os.path.expanduser(SKINS_FOLDER_PYTHON + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]))):
+	if (not os.path.exists(os.path.expanduser(unescapedPath + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]))):
 		Log("starting clone")
 		theCommand = ['sh', '-c', \
-			'cd ' + os.path.expanduser(SKINS_FOLDER) + '; ' + \
+			'cd ' + os.path.expanduser(escapedPath) + '; ' + \
 			'/usr/local/git/bin/git clone git://github.com/' + Data.LoadObject("skinfo." + whichSkin)[ASSkinPathDefault] + \
 			" " + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault] + " " + \
 			'&> /dev/null &']
@@ -151,7 +160,7 @@ def DownloadSkin(sender, whichSkin):
 
 	else:
 		Log("starting pull")
-		theCommand = ['sh', '-c', 'cd ' +  os.path.expanduser(SKINS_FOLDER_PYTHON + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]) + '; ' \
+		theCommand = ['sh', '-c', 'cd ' +  os.path.expanduser(unescapedPath + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault]) + '; ' \
 			'git pull']
 		theProcess = subprocess.Popen(theCommand, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 		resultOut, resultError = theProcess.communicate()
