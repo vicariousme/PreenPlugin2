@@ -78,6 +78,14 @@ def PreenMainMenu():
 def MediaCenterChooser():
 	dir = MediaContainer(viewGroup="InfoList")
 
+	# If Git isn't installed, we return an error message only.
+	if gitLocation() == "":
+		return MessageContainer(
+			L("Git Not Installed."),
+			L("Git must be installed to use Preen.")
+		)
+
+	# Otherwise we present a menu asking to choose between PHT and Laika skins
 	# The menu item for PHT skins
 	dir.Append(
 		Function(
@@ -170,7 +178,7 @@ def DownloadSkin(sender, whichSkin):
 		Log("starting clone")
 		theCommand = ['sh', '-c', \
 			'cd ' + os.path.expanduser(escapedPath) + '; ' + \
-			'/usr/local/git/bin/git clone git://github.com/' + Data.LoadObject("skinfo." + whichSkin)[ASSkinPathDefault] + \
+			'git clone git://github.com/' + Data.LoadObject("skinfo." + whichSkin)[ASSkinPathDefault] + \
 			" " + Data.LoadObject("skinfo." + whichSkin)[ASServerFolderDefault] + " " + \
 			'&> /dev/null &']
 
@@ -225,3 +233,16 @@ def processSkinsList():
 		Data.SaveObject("skinfo." + String.Encode(skinListType.get(ASSkinNameDefault)), recordAttributes)
 			
 	Dict[ASSkinDictionaryDefault] = tempSkinList
+
+####################################################################################################
+# gitLocation
+#
+# We should probably check to see if git exists anywhere on the computer
+# ...since it's required and all...
+####################################################################################################
+def gitLocation():
+	Log("started gitLocation")
+	gitQuery = subprocess.Popen(['which', 'git'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+	queryOut, queryError = gitQuery.communicate()
+	Log("query for git resulted in string " + queryOut)
+	return queryOut
